@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Head from "next/head";
 import { Mail, Video, Github, MessageSquare, Share2 } from "lucide-react";
 
 interface GradientButtonProps {
@@ -40,19 +41,9 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      const days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ];
-      const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December",
-      ];
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const months = ["January", "February", "March", "April", "May", "June",
+                      "July", "August", "September", "October", "November", "December"];
       const day = days[now.getDay()];
       const month = months[now.getMonth()];
       const date = now.getDate();
@@ -75,24 +66,24 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen space-y-6">
-      {/* Circular Image */}
+    <div className="flex flex-col items-center justify-center min-h-screen space-y-6 bg-[#f9f9f9] text-gray-800">
+      {/* Profile Image */}
       <img
         src="./1.jpeg"
         alt="Profile"
-        className="w-32 h-32 rounded-full object-cover shadow-md transition-transform duration-300 hover:scale-125"
+        className="w-32 h-32 rounded-full object-cover shadow-lg transition-transform duration-300 hover:scale-110"
       />
 
       {/* Gradient Button */}
       <a
         href={href}
-        className={`relative inline-block px-6 py-3 rounded-lg overflow-hidden text-white font-semibold ${
+        className={`relative inline-block px-6 py-3 rounded-lg overflow-hidden font-semibold ${
           isClicked
-            ? "bg-gradient-to-r from-pink-600 to-yellow-600 shadow-lg transform scale-95"
+            ? "bg-gradient-to-r from-pink-400 to-yellow-400 shadow-lg transform scale-95"
             : `bg-gradient-to-r ${
-                isHovered ? "from-pink-700 to-yellow-700" : "from-pink-600 to-yellow-600"
+                isHovered ? "from-pink-500 to-yellow-500" : "from-pink-400 to-yellow-400"
               }`
-        } transition-all duration-300 ease-in-out`}
+        } text-white transition-all duration-300 ease-in-out`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={handleClick}
@@ -113,64 +104,82 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
 
       {/* Row of Small Icons */}
       <div className="flex space-x-6 mt-4">
-        {/* Email */}
         <a
           href="mailto:Jesse@jessejesse.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-700 hover:text-pink-600 transition-colors duration-300"
+          className="text-gray-500 hover:text-pink-600 transition-colors duration-300"
         >
           <Mail size={28} />
         </a>
 
-        {/* Video Call */}
         <a
           href="https://hello.jessejesse.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-700 hover:text-yellow-600 transition-colors duration-300"
+          className="text-gray-500 hover:text-yellow-600 transition-colors duration-300"
         >
           <Video size={28} />
         </a>
 
-        {/* GitHub */}
         <a
           href="https://github.com/sudo-self"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-700 hover:text-yellow-600 transition-colors duration-300"
+          className="text-gray-500 hover:text-yellow-500 transition-colors duration-300"
         >
           <Github size={28} />
         </a>
 
-        {/* SMS / Text */}
         <a
           href="sms:+17205152459"
-          className="text-gray-700 hover:text-green-600 transition-colors duration-300"
+          className="text-gray-500 hover:text-green-600 transition-colors duration-300"
         >
           <MessageSquare size={28} />
         </a>
 
-        {/* Share Resume */}
         <button
           onClick={handleShareResume}
-          className="text-gray-700 hover:text-blue-600 transition-colors duration-300"
+          className="text-gray-500 hover:text-blue-600 transition-colors duration-300"
         >
           <Share2 size={28} />
         </button>
       </div>
 
       {/* Footer Time */}
-      <div className="mt-6 text-xs text-indigo-500">{currentTime}</div>
+      <div className="mt-6 text-xs text-indigo-400">{currentTime}</div>
     </div>
   );
 };
 
-// --- THIS is the key fix ---
 const Page = () => {
-  return <GradientButton href="https://jessejesse.xyz" />;
+  return (
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Jesse</title>
+        <meta name="title" content="Jesse" />
+        <meta name="description" content="Hello! I am Jesse here is my contact info" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://jesse-contact-card.vercel.app" />
+        <meta property="og:title" content="Jesse" />
+        <meta property="og:description" content="Hello! I am Jesse here is my contact info" />
+        <meta property="og:image" content="https://jesse-contact-card.vercel.app/og.png" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://jesse-contact-card.vercel.app" />
+        <meta property="twitter:title" content="Jesse" />
+        <meta property="twitter:description" content="Hello! I am Jesse here is my contact info" />
+        <meta property="twitter:image" content="https://jesse-contact-card.vercel.app/og.png" />
+        <meta name="author" content="Jesse" />
+      </Head>
+
+      <GradientButton href="https://jessejesse.xyz" />
+    </>
+  );
 };
 
 export default Page;
+
 
 
