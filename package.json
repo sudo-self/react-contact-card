@@ -1,11 +1,5 @@
 {
   "dependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-scripts": "^4.0.0",
-    "lucide-react": "latest",
-    "recharts": "2.9.0",
-    "react-router-dom": "latest",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-aspect-ratio": "^1.1.0",
@@ -35,7 +29,13 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.1.8",
+    "lucide-react": "latest",
+    "react": "^18.0.0",
     "react-day-picker": "^8.10.1",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "latest",
+    "react-scripts": "^5.0.1",
+    "recharts": "2.9.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.1"
@@ -54,5 +54,17 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
