@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Mail, Video, Github, MessageSquare, Share2 } from "lucide-react";
 
@@ -12,7 +14,9 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    setIsClicked(true);
     window.open("https://jessejesse.xyz", "_blank");
+    setTimeout(() => setIsClicked(false), 300);
   };
 
   const handleShareResume = async () => {
@@ -29,7 +33,6 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
         console.error("Error sharing:", error);
       }
     } else {
-      // Fallback: open the resume directly
       window.open(shareData.url, "_blank");
     }
   };
@@ -38,15 +41,20 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
     const updateTime = () => {
       const now = new Date();
       const days = [
-        "SUNDAY",
-        "MONDAY",
-        "TUESDAY",
-        "WEDNESDAY",
-        "THURSDAY",
-        "FRIDAY",
-        "SATURDAY",
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+      const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December",
       ];
       const day = days[now.getDay()];
+      const month = months[now.getMonth()];
       const date = now.getDate();
       const suffix =
         date % 10 === 1 && date !== 11
@@ -58,12 +66,11 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
           : "th";
       const hours = now.getHours().toString().padStart(2, "0");
       const minutes = now.getMinutes().toString().padStart(2, "0");
-      setCurrentTime(`${day} ${date}${suffix} ${hours}${minutes}`);
+      setCurrentTime(`${day} ${month} ${date}${suffix} ${hours}${minutes}`);
     };
 
     updateTime();
     const interval = setInterval(updateTime, 60000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -73,7 +80,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
       <img
         src="./1.jpeg"
         alt="Profile"
-        className="w-32 h-32 rounded-full object-cover shadow-md transition-transform duration-300 hover:scale-105"
+        className="w-32 h-32 rounded-full object-cover shadow-md transition-transform duration-300 hover:scale-125"
       />
 
       {/* Gradient Button */}
@@ -83,9 +90,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
           isClicked
             ? "bg-gradient-to-r from-pink-500 to-yellow-500 shadow-lg transform scale-95"
             : `bg-gradient-to-r ${
-                isHovered
-                  ? "from-pink-600 to-yellow-600"
-                  : "from-pink-500 to-yellow-500"
+                isHovered ? "from-pink-600 to-yellow-600" : "from-pink-500 to-yellow-500"
               }`
         } transition-all duration-300 ease-in-out`}
         onMouseEnter={() => setIsHovered(true)}
@@ -133,7 +138,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
           href="https://github.com/sudo-self"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-600 hover:text-black transition-colors duration-300"
+          className="text-gray-500 hover:text-yellow transition-colors duration-300"
         >
           <Github size={28} />
         </a>
@@ -156,9 +161,16 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
       </div>
 
       {/* Footer Time */}
-      <div className="mt-6 text-xs text-indigo-400">{currentTime}</div>
+      <div className="mt-6 text-xs text-cyan-400">{currentTime}</div>
     </div>
   );
 };
 
-export default GradientButton;
+// --- THIS is the key fix ---
+const Page = () => {
+  return <GradientButton href="https://jessejesse.xyz" />;
+};
+
+export default Page;
+
+
