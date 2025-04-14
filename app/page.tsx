@@ -88,9 +88,9 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
         href={href}
         className={`relative inline-block px-6 py-3 rounded-lg overflow-hidden text-white font-semibold ${
           isClicked
-            ? "bg-gradient-to-r from-pink-500 to-yellow-500 shadow-lg transform scale-95"
+            ? "bg-gradient-to-r from-pink-600 to-yellow-600 shadow-lg transform scale-95"
             : `bg-gradient-to-r ${
-                isHovered ? "from-pink-600 to-yellow-600" : "from-pink-500 to-yellow-500"
+                isHovered ? "from-pink-700 to-yellow-700" : "from-pink-600 to-yellow-600"
               }`
         } transition-all duration-300 ease-in-out`}
         onMouseEnter={() => setIsHovered(true)}
@@ -118,7 +118,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
           href="mailto:Jesse@jessejesse.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-600 hover:text-pink-500 transition-colors duration-300"
+          className="text-gray-700 hover:text-pink-600 transition-colors duration-300"
         >
           <Mail size={28} />
         </a>
@@ -128,7 +128,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
           href="https://hello.jessejesse.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-600 hover:text-yellow-500 transition-colors duration-300"
+          className="text-gray-700 hover:text-yellow-600 transition-colors duration-300"
         >
           <Video size={28} />
         </a>
@@ -138,7 +138,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
           href="https://github.com/sudo-self"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-500 hover:text-yellow transition-colors duration-300"
+          className="text-gray-700 hover:text-yellow-600 transition-colors duration-300"
         >
           <Github size={28} />
         </a>
@@ -146,7 +146,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
         {/* SMS / Text */}
         <a
           href="sms:+17205152459"
-          className="text-gray-600 hover:text-green-500 transition-colors duration-300"
+          className="text-gray-700 hover:text-green-600 transition-colors duration-300"
         >
           <MessageSquare size={28} />
         </a>
@@ -154,14 +154,14 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
         {/* Share Resume */}
         <button
           onClick={handleShareResume}
-          className="text-gray-600 hover:text-blue-500 transition-colors duration-300"
+          className="text-gray-700 hover:text-blue-600 transition-colors duration-300"
         >
           <Share2 size={28} />
         </button>
       </div>
 
       {/* Footer Time */}
-      <div className="mt-6 text-xs text-cyan-400">{currentTime}</div>
+      <div className="mt-6 text-xs text-indigo-500">{currentTime}</div>
     </div>
   );
 };
