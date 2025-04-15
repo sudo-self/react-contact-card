@@ -92,7 +92,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
         {/* Main content */}
         <div className="z-10 flex flex-col items-center space-y-4 text-orange-300">
           {/* Date & Time */}
-          <div className="text-lg text-indigo-300 dark:text-indigo-700 text-center mb-[2rem]">
+          <div className="text-lg text-cyan-300 dark:text-cyan-700 text-center mb-[2rem]">
             <div>{currentDate}</div>
             <div className="text-xl text-green-300 dark:text-green-700 mt-[-4px]">{currentTime}</div>
           </div>
@@ -119,13 +119,13 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
               href="https://github.com/sudo-self"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cyan-300 hover:text-cyan-400 transition-colors duration-300"
+              className="text-cyan-200 hover:text-cyan-300 transition-colors duration-300"
             >
               <Github size={28} />
             </a>
             <a
               href="sms:+17205152459"
-              className="text-green-300 hover:text-green-400 transition-colors duration-300"
+              className="text-green-200 hover:text-green-400 transition-colors duration-300"
             >
               <MessageSquare size={28} />
             </a>
