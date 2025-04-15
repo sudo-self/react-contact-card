@@ -1,7 +1,10 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import { Metadata } from "next";
-import "./globals.css";
+//layout.tsx
 
+'use client';
+
+import { Geist, Geist_Mono } from "next/font/google";
+import { useEffect, useState } from "react";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -10,27 +13,29 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
-  subsets: ["latin"], 
+  subsets: ["latin"],
 });
-
-export const metadata: Metadata = {
-  title: "Jesse",
-  description: "Hello! I am Jesse this is my contact info",
-};
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const [isDark, setIsDark] = useState(false);
+
+  // Effect to set theme
+  useEffect(() => {
+    const stored = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const shouldUseDark = stored === "dark" || (!stored && prefersDark);
+    setIsDark(shouldUseDark);
+    document.documentElement.classList.toggle("dark", shouldUseDark);
+  }, []);
+
   return (
     <html lang="en">
-      <head>
-        {/* You can include additional meta tags or links to external resources here */}
-      </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* The `children` prop will render your page's content */}
+      <head />
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased ${isDark ? 'dark' : ''}`}>
         {children}
       </body>
     </html>
   );
 }
-

@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Moon, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Sun, Moon } from "lucide-react";
 
-const LightDarkToggle: React.FC = () => {
+export default function LightDarkToggle() {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
     const root = window.document.documentElement;
-    if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+
+    if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
       root.classList.add("dark");
       setIsDark(true);
     } else {
@@ -19,13 +21,15 @@ const LightDarkToggle: React.FC = () => {
 
   const toggleTheme = () => {
     const root = window.document.documentElement;
-    if (root.classList.contains("dark")) {
+    const isDarkNow = root.classList.contains("dark");
+
+    if (isDarkNow) {
       root.classList.remove("dark");
-      localStorage.theme = "light";
+      localStorage.setItem("theme", "light");
       setIsDark(false);
     } else {
       root.classList.add("dark");
-      localStorage.theme = "dark";
+      localStorage.setItem("theme", "dark");
       setIsDark(true);
     }
   };
@@ -33,15 +37,14 @@ const LightDarkToggle: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="absolute top-6 right-6 z-50 p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-md"
+      className="absolute top-4 right-4 z-50 p-2 rounded-full bg-gray-200 dark:bg-gray-800"
     >
-      {isDark ? <Sun size={20} /> : <Moon size={20} />}
+      {isDark ? (
+        <Sun size={24} className="text-yellow-500 dark:text-gray-200" />
+      ) : (
+        <Moon size={24} className="text-gray-900 dark:text-gray-100" />
+      )}
     </button>
   );
-};
+}
 
-export default LightDarkToggle;
-
-
-
- 
