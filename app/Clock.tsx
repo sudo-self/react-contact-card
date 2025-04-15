@@ -38,11 +38,11 @@ const Clock: React.FC = () => {
             backgroundSize: 'cover',
           }}
         >
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-black rounded-full z-10"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-pink-500 rounded-full z-10"></div>
         </div>
 
         <div
-          className="absolute top-1/2 left-1/2 bg-red-500 h-24 w-1 rounded-full"
+          className="absolute top-1/2 left-1/2 bg-gray-300 h-24 w-1 rounded-full"
           style={{
             transform: `rotate(${secondDegrees}deg)`,
             transformOrigin: 'top center',
