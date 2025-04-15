@@ -89,18 +89,19 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
         {/* Clock */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-150 opacity-80 pointer-events-none z-0">
           <Clock />
-        </div>
+         </div>
 
         {/* Main content */}
-        <div className="z-10 flex flex-col items-center space-y-4">
+        <div className="z-10 flex flex-col items-center space-y-4 text-orange-700">
           {/* Date & Time */}
-          <div className="text-xl text-indigo-800 dark:text-indigo-800 text-center mb-[2rem]">
+          <div className="text-lg text-indigo-800 dark:text-indigo-800 text-center mb-[2rem]">
             <div>{currentDate}</div>
             <div className="text-xl text-green-600 dark:text-green-800 mt-[-4px]">{currentTime}</div>
           </div>
 
           {/* Icons */}
-          <div className="flex space-x-6 mt-[6rem]">
+        
+          <div className="flex space-x-6 mt-[4rem]">
             <a
               href="mailto:Jesse@jessejesse.com"
               target="_blank"

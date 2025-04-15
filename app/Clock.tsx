@@ -34,7 +34,7 @@ const Clock: React.FC = () => {
         <div
           className="absolute top-0 left-0 w-full h-full rounded-full"
           style={{
-            backgroundImage: 'url(./image.svg)',
+            backgroundImage: 'url(./image.png)',
             backgroundSize: 'cover',
           }}
         >
