@@ -1,4 +1,10 @@
+
 @import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 :root {
   --background: #ffffff;
@@ -12,17 +18,12 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 
 body {
@@ -33,4 +34,20 @@ body {
 
 h1, h2, h3, p {
   font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+}
+
+.bg-dark {
+  background-color: var(--background);
+}
+
+.text-dark {
+  color: var(--foreground);
+}
+
+.dark .bg-dark {
+  background-color: var(--background);
+}
+
+.dark .text-dark {
+  color: var(--foreground);
 }

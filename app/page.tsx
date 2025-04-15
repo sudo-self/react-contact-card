@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
-import { Mail, Video, Github, MessageSquare, Share2 } from "lucide-react";
+import Clock from "./Clock";
+import { Mail, Video, Github, MessageSquare } from "lucide-react";
+import LightDarkToggle from "./LightDarkToggle";
 
 interface GradientButtonProps {
   href?: string;
@@ -11,8 +13,9 @@ interface GradientButtonProps {
 const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [currentDate, setCurrentDate] = useState("");
-  const [currentTime, setCurrentTime] = useState("");
+  const [currentDate, setCurrentDate] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -40,11 +43,14 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
   };
 
   useEffect(() => {
+    setIsMounted(true);
     const updateDateTime = () => {
       const now = new Date();
       const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      const months = ["January", "February", "March", "April", "May", "June",
-                      "July", "August", "September", "October", "November", "December"];
+      const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December",
+      ];
       const day = days[now.getDay()];
       const month = months[now.getMonth()];
       const date = now.getDate();
@@ -56,6 +62,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
           : date % 10 === 3 && date !== 13
           ? "rd"
           : "th";
+
       const hours = now.getHours().toString().padStart(2, "0");
       const minutes = now.getMinutes().toString().padStart(2, "0");
       const seconds = now.getSeconds().toString().padStart(2, "0");
@@ -64,98 +71,100 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
       setCurrentTime(`${hours}:${minutes}:${seconds}`);
     };
 
-    updateDateTime();
-    const interval = setInterval(updateDateTime, 1000);
-    return () => clearInterval(interval);
+    if (typeof window !== "undefined") {
+      updateDateTime();
+      const interval = setInterval(updateDateTime, 1000);
+      return () => clearInterval(interval);
+    }
   }, []);
 
+  if (!isMounted) {
+    return null;
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen space-y-6 bg-[#f9f9f9] text-gray-800">
-      {/* Display Current Date and Time at the Top */}
-      <div className="text-xs text-indigo-700 mt-4 mb-2">
-        <div>{currentDate}</div>
-        <div className="text-sm text-indigo-700">{currentTime}</div>
+    <>
+      <LightDarkToggle />
+      <div className="relative flex flex-col items-center justify-center min-h-screen bg-gray-900 dark:bg-gray-100 text-gray-800 dark:text-gray-200 px-4 overflow-hidden">
+        {/* Clock */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-150 opacity-80 pointer-events-none z-0">
+          <Clock />
+        </div>
+
+        {/* Main content */}
+        <div className="z-10 flex flex-col items-center space-y-4">
+          {/* Date & Time */}
+          <div className="text-xl text-indigo-800 dark:text-indigo-800 text-center mb-[2rem]">
+            <div>{currentDate}</div>
+            <div className="text-xl text-green-600 dark:text-green-800 mt-[-4px]">{currentTime}</div>
+          </div>
+
+          {/* Icons */}
+          <div className="flex space-x-6 mt-[6rem]">
+            <a
+              href="mailto:Jesse@jessejesse.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-pink-500 hover:text-pink-800 transition-colors duration-300"
+            >
+              <Mail size={28} />
+            </a>
+            <a
+              href="https://hello.jessejesse.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-yellow-800 hover:text-yellow-600 transition-colors duration-300"
+            >
+              <Video size={28} />
+            </a>
+            <a
+              href="https://github.com/sudo-self"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cyan-700 hover:text-cyan-500 transition-colors duration-300"
+            >
+              <Github size={28} />
+            </a>
+            <a
+              href="sms:+17205152459"
+              className="text-green-800 hover:text-green-600 transition-colors duration-300"
+            >
+              <MessageSquare size={28} />
+            </a>
+          </div>
+        </div>
+
+        {/* Footer with the Gradient Button */}
+        <footer className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex justify-center pt-2 z-10">
+          <a
+            href={href}
+            className={`relative inline-block px-8 py-4 rounded-lg overflow-hidden font-semibold text-lg ${
+              isClicked
+                ? "bg-gradient-to-r from-pink-400 to-yellow-400 shadow-lg transform scale-95"
+                : `bg-gradient-to-r ${
+                    isHovered ? "from-pink-500 to-yellow-500" : "from-pink-400 to-yellow-400"
+                  }`
+            } text-white transition-all duration-300 ease-in-out`}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onClick={handleClick}
+            style={{ cursor: href ? "pointer" : "default" }}
+            rel="noopener noreferrer"
+          >
+            {isClicked && (
+              <div
+                className="absolute inset-0 bg-white opacity-20 rounded-lg"
+                style={{
+                  transform: "scale(2)",
+                  transition: "transform 0.2s ease-out",
+                }}
+              />
+            )}
+            Jesse Roper
+          </a>
+        </footer>
       </div>
-
-      {/* Profile Image */}
-      <img
-        src="./1.jpeg"
-        alt="Profile"
-        className="w-32 h-32 rounded-full object-cover shadow-lg transition-transform duration-300 hover:scale-110"
-      />
-
-      {/* Gradient Button */}
-      <a
-        href={href}
-        className={`relative inline-block px-6 py-3 rounded-lg overflow-hidden font-semibold ${
-          isClicked
-            ? "bg-gradient-to-r from-pink-400 to-yellow-400 shadow-lg transform scale-95"
-            : `bg-gradient-to-r ${
-                isHovered ? "from-pink-500 to-yellow-500" : "from-pink-400 to-yellow-400"
-              }`
-        } text-white transition-all duration-300 ease-in-out`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onClick={handleClick}
-        style={{ cursor: href ? "pointer" : "default" }}
-        rel="noopener noreferrer"
-      >
-        {isClicked && (
-          <div
-            className="absolute inset-0 bg-white opacity-20 rounded-lg"
-            style={{
-              transform: "scale(2)",
-              transition: "transform 0.2s ease-out",
-            }}
-          />
-        )}
-        Jesse Roper
-      </a>
-
-      {/* Row of Small Icons */}
-      <div className="flex space-x-6 mt-4">
-        <a
-          href="mailto:Jesse@jessejesse.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-500 hover:text-pink-600 transition-colors duration-300"
-        >
-          <Mail size={28} />
-        </a>
-
-        <a
-          href="https://hello.jessejesse.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-500 hover:text-yellow-600 transition-colors duration-300"
-        >
-          <Video size={28} />
-        </a>
-
-        <a
-          href="https://github.com/sudo-self"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-500 hover:text-yellow-500 transition-colors duration-300"
-        >
-          <Github size={28} />
-        </a>
-
-        <a
-          href="sms:+17205152459"
-          className="text-gray-500 hover:text-green-600 transition-colors duration-300"
-        >
-          <MessageSquare size={28} />
-        </a>
-
-        <button
-          onClick={handleShareResume}
-          className="text-gray-500 hover:text-blue-600 transition-colors duration-300"
-        >
-          <Share2 size={28} />
-        </button>
-      </div>
-    </div>
+    </>
   );
 };
 
@@ -187,8 +196,6 @@ const Page = () => {
 };
 
 export default Page;
-
-
 
 
 
