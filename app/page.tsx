@@ -11,6 +11,7 @@ interface GradientButtonProps {
 const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [currentDate, setCurrentDate] = useState("");
   const [currentTime, setCurrentTime] = useState("");
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -39,7 +40,7 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
   };
 
   useEffect(() => {
-    const updateTime = () => {
+    const updateDateTime = () => {
       const now = new Date();
       const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       const months = ["January", "February", "March", "April", "May", "June",
@@ -57,16 +58,25 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
           : "th";
       const hours = now.getHours().toString().padStart(2, "0");
       const minutes = now.getMinutes().toString().padStart(2, "0");
-      setCurrentTime(`${day} ${month} ${date}${suffix} ${hours}${minutes}`);
+      const seconds = now.getSeconds().toString().padStart(2, "0");
+
+      setCurrentDate(`${day}, ${month} ${date}${suffix}`);
+      setCurrentTime(`${hours}:${minutes}:${seconds}`);
     };
 
-    updateTime();
-    const interval = setInterval(updateTime, 60000);
+    updateDateTime();
+    const interval = setInterval(updateDateTime, 1000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen space-y-6 bg-[#f9f9f9] text-gray-800">
+      {/* Display Current Date and Time at the Top */}
+      <div className="text-xs text-indigo-700 mt-4 mb-2">
+        <div>{currentDate}</div>
+        <div className="text-sm text-indigo-700">{currentTime}</div>
+      </div>
+
       {/* Profile Image */}
       <img
         src="./1.jpeg"
@@ -145,9 +155,6 @@ const GradientButton: React.FC<GradientButtonProps> = ({ href }) => {
           <Share2 size={28} />
         </button>
       </div>
-
-      {/* Footer Time */}
-      <div className="mt-6 text-xs text-indigo-400">{currentTime}</div>
     </div>
   );
 };
@@ -180,6 +187,8 @@ const Page = () => {
 };
 
 export default Page;
+
+
 
 
 
